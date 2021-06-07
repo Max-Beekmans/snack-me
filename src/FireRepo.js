@@ -1,31 +1,48 @@
-const firebase = require("firebase");
-require("firebase/firestore");
-var config = import("config/FirebaseConfig");
+import firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/storage";
 
-var repo = function() {
-    firebase.initializeApp(firebaseConfig);
-    var db = firebase.firestore();
+import config from './config/FirebaseConfig';
 
-    var getItems = function() {
+const repo = function() {
+    firebase.initializeApp({
+        apiKey: config.apiKey,
+        appId: config.appId,
+        projectId: config.projectId,
+        authDomain: config.authDomain,
+        storageBucket: config.storageBucket,
+        messagingSenderId: config.messagingSenderId,
+        measurementId: config.measurementId
+    });
 
+    let db = firebase.firestore();
+    let storage = firebase.storage();
+    storage.useEmulator("localhost", 9199);
+
+    let getItems = function() {
+        return db.collection("items").get();
     };
 
-    var addItem = function(item) {
+    let addItem = function(item) {
+        db.collection("items").add({
+            first: item.first,
+            last: item.last
+        }).then((docRef) => {
+            console.log("Document written with ID: ", docRef.id);
+        }).catch((error) => {
+            console.error("Error adding document: ", error);
+        });
+    };
 
+    let getImageRef = function(imageRef) {
+        return storage.ref(imageRef).getDownloadURL();
     };
 
     return {
-        getItems: getItems
+        getItems: getItems,
+        addItem: addItem,
+        getImageRef: getImageRef
     }
 }();
 
-export default {
-
-}
-
-const firebase = require("firebase");
-require("firebase/firestore");
-
-
-
-firebase.
+export default repo;

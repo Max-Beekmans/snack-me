@@ -17,7 +17,7 @@ const repo = function() {
 
     let db = firebase.firestore();
     let storage = firebase.storage();
-    storage.useEmulator("localhost", 9199);
+    //storage.useEmulator("localhost", 9199);
 
     let getItems = function() {
         return db.collection("items").get();
@@ -35,13 +35,18 @@ const repo = function() {
     };
 
     let getImageRef = function(imageRef) {
-        return storage.ref(imageRef).getDownloadURL();
+        return storage.ref(imageRef);
+    };
+
+    let getDownloadUrl = function(ref) {
+        return ref.getDownloadURL();
     };
 
     return {
         getItems: getItems,
         addItem: addItem,
-        getImageRef: getImageRef
+        getImageRef: getImageRef,
+        getDownloadUrl: getDownloadUrl
     }
 }();
 

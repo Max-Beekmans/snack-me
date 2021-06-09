@@ -1,6 +1,7 @@
 <template>
     <div class="card text-center p-3" style="width: 18rem;">
-        <img v-if="image" :src="image" class="card-img-top" alt="...">
+        <img v-if="image" v-bind:src="image" class="card-img-top" alt="...">
+        <div v-else class="loading">loading...</div>
         <div class="card-body">
             <h5 class="card-title">{{itemName}}</h5>
             <p v-if="itemDescription" class="card-text">{{itemDescription}}</p>
@@ -26,11 +27,12 @@
         name: 'CandyBox',
         data() {
             return {
-                image: String
+                image: ""
             }
         },
         created() {
             FireRepo.getImageRef(this.itemImage)
+                .getDownloadURL()
                 .then((url) => {
                     console.log(url);
                     this.image = url;

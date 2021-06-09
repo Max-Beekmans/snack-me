@@ -1,5 +1,6 @@
 <template>
     <div class="row gx-5">
+        <div class="loading" v-if="loading">loading...</div>
         <div v-for="item in items" :key="item.name" class="col-lg-3 col-sm-6 col-md-6 col-xs-12">
             <candy-box :item-name="item.name" :item-price="item.price" :item-weight="item.weight" :item-image="item.image" />
         </div>
@@ -8,61 +9,36 @@
 
 <script>
     import CandyBox from './CandyBox';
+    import FireRepo from '../FireRepo';
 
     export default {
         name: 'CandyList',
         components: {CandyBox},
-        created() {
-          console.log(this.items);
-        },
-        props: {
-            items: Array
-        }
-/*        data: function() {
+        data: function () {
             return {
-                items: [
-                    {
-                        name: "Milka Chocolade",
-                        weight: 200,
-                        price: 2.69
-                    }, {
-                        name: "Mars",
-                        weight: 25,
-                        price: 0.99
-                    }, {
-                        name: "Twix",
-                        weight: 25,
-                        price: 0.99
-                    },
-                    {
-                        name: "Milka Chocolade2",
-                        weight: 200,
-                        price: 2.69
-                    }, {
-                        name: "Mars2",
-                        weight: 25,
-                        price: 0.99
-                    }, {
-                        name: "Twix2",
-                        weight: 25,
-                        price: 0.99
-                    },
-                    {
-                        name: "Milka Chocolade3",
-                        weight: 200,
-                        price: 2.69
-                    }, {
-                        name: "Mars3",
-                        weight: 25,
-                        price: 0.99
-                    }, {
-                        name: "Twix3",
-                        weight: 25,
-                        price: 0.99
-                    }
-                ]
-            };
-        }*/
+                loading: false,
+                items: []
+            }
+        },
+        created() {
+            this.fetchItems()
+        },
+        methods: {
+            fetchItems() {
+                this.loading = true;
+                FireRepo.getItems()
+                    .then((data) => {
+                        data.forEach((doc) => {
+                            this.loading = false;
+                            console.log(doc.data());
+                            let d = doc.data();
+                            this.items.splice(0, d.count, d);
+                        });
+                    }).catch((err) => {
+                    console.log(err);
+                });
+            }
+        }
     };
 </script>
 

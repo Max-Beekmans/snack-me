@@ -8,17 +8,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <li class="nav-item" v-bind:class="{ active: $route.path === '/'}">
+                        <router-link to="/" class="nav-link">Home</router-link>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
+                    <li class="nav-item" v-bind:class="{ active: $route.path === '/prices'}">
+                        <router-link to="/prices" class="nav-link">Features</router-link>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
+                    <li class="nav-item" v-bind:class="{ active: $route.path === '/something'}">
+                        <router-link to="/prices" class="nav-link">Pricing</router-link>
                     </li>
                 </ul>
             </div>

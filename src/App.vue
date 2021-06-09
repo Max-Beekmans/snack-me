@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav-bar></nav-bar>
-    <candy-list v-if="items" :items="items"></candy-list>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -9,32 +9,11 @@
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import FireRepo from './FireRepo';
-import CandyList from './components/CandyList';
 import NavBar from './components/NavBar';
 
 export default {
   name: 'App',
-  created() {
-    FireRepo.getItems()
-            .then((data) => {
-              data.forEach((doc) => {
-                console.log(doc.data());
-                let d = doc.data();
-                this.items.splice(0, d.count, d);
-                //this.items = new Array(doc.data());
-              });
-            }).catch((err) => {
-      console.log(err);
-    });
-  },
-  data() {
-      return {
-        items: []
-      };
-  },
   components: {
-    CandyList,
     NavBar
   },
   mounted() {

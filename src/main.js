@@ -6,6 +6,8 @@ Vue.use(VueRouter);
 import App from './App';
 import Home from './components/Home';
 import Prices from './components/Prices';
+import Contact from './components/Contact';
+import Login from './components/Login';
 
 Vue.config.productionTip = false;
 
@@ -14,7 +16,9 @@ const router = new VueRouter({
   base: __dirname,
   routes: [
     { path: '/', component: Home },
-    { path: '/prices', component: Prices}
+    { path: '/prices', component: Prices},
+    { path: '/contact', component: Contact},
+    { path: '/login', component: Login}
   ]
 });
 

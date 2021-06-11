@@ -42,6 +42,10 @@ const repo = function() {
         return ref.getDownloadURL();
     };
 
+    let getUser = function() {
+
+    }
+
     return {
         getItems: getItems,
         addItem: addItem,

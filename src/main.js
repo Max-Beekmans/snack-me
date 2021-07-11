@@ -1,28 +1,55 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router';
-
-Vue.use(VueRouter);
-
+import { i18n } from './I18n';
+import { store } from './store/store';
+import routerFunc from './router';
+import { firestorePlugin } from 'vuefire';
+import upperFirst from 'lodash/upperFirst';
+import camelCase from 'lodash/camelCase';
 import App from './App';
-import Home from './components/Home';
-import Prices from './components/Prices';
-import Contact from './components/Contact';
-import Login from './components/Login';
 
-Vue.config.productionTip = false;
+let router = routerFunc(store);
 
-const router = new VueRouter({
-  mode: 'history',
-  base: __dirname,
-  routes: [
-    { path: '/', component: Home },
-    { path: '/prices', component: Prices},
-    { path: '/contact', component: Contact},
-    { path: '/login', component: Login}
-  ]
+Vue.use(firestorePlugin);
+
+//mixins
+Vue.mixin({
+  methods: {
+    AlphaNumCheck(str) {
+      return str && str.match("^[a-zA-Z0-9_]*$");
+    },
+    NumCheck(str) {
+      return str && str.match("^[0-9]*$");
+    }
+  }
 });
+
+const requireComponent = require.context(
+    './components/base',
+    false,
+    /Base[A-Z]\w+\.(vue|js)$/
+)
+
+requireComponent.keys().forEach(fileName => {
+  const componentConfig = requireComponent(fileName)
+
+  const componentName = upperFirst(
+      camelCase(
+          fileName
+              .split('/')
+              .pop()
+              .replace(/\.\w+$/, '')
+      )
+  )
+
+  Vue.component(
+      componentName,
+      componentConfig.default || componentConfig
+  )
+})
 
 new Vue({
   router,
+  i18n,
+  store: store,
   render: h => h(App)
 }).$mount('#app');

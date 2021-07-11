@@ -3,11 +3,11 @@
         <img v-if="image" v-bind:src="image" class="card-img-top" alt="...">
         <div v-else class="loading">loading...</div>
         <div class="card-body">
-            <h5 class="card-title">{{itemName}}</h5>
-            <p v-if="itemDescription" class="card-text">{{itemDescription}}</p>
+            <h5 class="card-title">{{name}}</h5>
+            <p v-if="description" class="card-text">{{description}}</p>
             <div class="row">
                 <div class="col-5">
-                    {{itemWeight}}g
+                    {{weight}}g
                 </div>
                 <div class="col-2" />
                 <div class="col-5">
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-    import FireRepo from '../FireRepo';
+    import imageService from '@/services/image-service';
 
     export default {
         name: 'CandyBox',
@@ -31,21 +31,20 @@
             }
         },
         created() {
-            FireRepo.getImageRef(this.itemImage)
+          imageService.getImageRef(this.imageUrl)
                 .getDownloadURL()
                 .then((url) => {
-                    console.log(url);
                     this.image = url;
                 }).catch((err) => {
                     console.log(err);
             });
         },
         props: {
-            itemName: String,
-            itemDescription: String,
-            itemWeight: Number,
-            itemPrice: Number,
-            itemImage: String,
+            name: String,
+            description: String,
+            weight: Number,
+            price: Number,
+            imageUrl: String,
         }
     };
 </script>

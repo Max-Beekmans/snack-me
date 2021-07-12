@@ -11,9 +11,14 @@ const repo = function() {
         return ref.getDownloadURL();
     };
 
+    let uploadFile = function(ref, file) {
+        return ref.put(file);
+    }
+
     return {
         getImageRef,
-        getDownloadUrl
+        getDownloadUrl,
+        uploadFile
     }
 }();
 

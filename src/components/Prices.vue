@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <h2>{{ $t("message.price_list") }}</h2>
-        <BaseTable v-bind:list="items"></BaseTable>
+        <BaseTable v-bind:list="items" v-bind:columns="columns"></BaseTable>
     </div>
 </template>
 
@@ -11,27 +11,19 @@
     export default {
       name: 'Prices',
       components: { BaseTable },
-      data: function () {
-          return {
-            items: [
-              {
-                name: "ItemName",
-                weight: "200g",
-                price: "2"
-              },
-              {
-                name: "Yinek",
-                weight: "Kanker veel",
-                price: "2"
-              },
-              {
-                name: "Gek moment",
-                weight: "Eva YDe",
-                price: "2"
-              }
-            ]
-          }
+      data() {
+        return {
+          columns: ["name", "weight", "price", "image"]
         }
+      },
+      computed: {
+        items() {
+          return this.$store.getters.allItems;
+        }
+      },
+      created() {
+        this.$store.dispatch('getItems');
+      }
     };
 </script>
 

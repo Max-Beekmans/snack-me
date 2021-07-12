@@ -7,6 +7,8 @@ import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
 import App from './App';
 
+store.commit('initStore');
+
 let router = routerFunc(store);
 
 Vue.use(firestorePlugin);
@@ -18,7 +20,7 @@ Vue.mixin({
       return str && str.match("^[a-zA-Z0-9_]*$");
     },
     NumCheck(str) {
-      return str && str.match("^[0-9]*$");
+      return str && str.match("^[0-9.,]*$");
     }
   }
 });
@@ -50,6 +52,6 @@ requireComponent.keys().forEach(fileName => {
 new Vue({
   router,
   i18n,
-  store: store,
+  store,
   render: h => h(App)
 }).$mount('#app');

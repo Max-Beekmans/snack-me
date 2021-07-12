@@ -1,5 +1,5 @@
 import itemService from '../services/item-service';
-import authService from '@/services/auth-service';
+import authService from '../services/auth-service';
 
 export default {
     getItems({ commit }) {
@@ -12,13 +12,20 @@ export default {
                 console.log(err);
             });
     },
+    addItem({ commit }, item) {
+        itemService.addItem(item)
+            .then(res => {
+                console.log(res);
+                commit('addItem', item);
+            }).catch(err => {
+                console.log(err);
+        });
+    },
     signIn({ commit }, user) {
-        console.log("signIn");
         return new Promise((resolve, reject) => {
-            authService.emailSignIn(user.username, user.password)
+            authService.emailSignIn(user.email, user.password)
                 .then(res => {
                     let user = res.user;
-                    console.log(user);
                     resolve(user);
                     commit('signInUser', user);
                 })

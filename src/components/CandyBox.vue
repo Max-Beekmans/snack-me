@@ -6,13 +6,13 @@
             <h5 class="card-title">{{name}}</h5>
             <p v-if="description" class="card-text">{{description}}</p>
             <div class="row">
-                <div class="col-5">
+                <div class="col-4">
                     {{weight}}g
                 </div>
                 <div class="col-2" />
-                <div class="col-5">
+                <div class="col-6">
                     <a href="#" class="btn btn-primary">
-                        <i class="fas fa-cart-plus"></i> Add
+                        <i class="fas fa-cart-plus"></i> &euro;{{ price }}
                     </a>
                 </div>
             </div>
@@ -50,9 +50,16 @@
 </script>
 
 <style scoped>
-    .candyBox {
-        background-color: aquamarine;
-        padding: 25px;
-        font-size: 30pt;
-    }
+  .card-img-top {
+    max-height: 250px;
+    max-width: 250px;
+  }
+
+  .card-body > * {
+    margin-bottom: 25px;
+  }
+
+  .card-body > *:last-child{
+    margin-bottom: 0;
+  }
 </style>

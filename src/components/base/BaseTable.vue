@@ -3,13 +3,13 @@
     <thead>
     <tr>
       <th scope="col">#</th>
-      <th v-for="(value, name) in list[0]" v-bind:key="value.name" scope="col">{{ name }}</th>
+      <th v-for="col in columns" v-bind:key="col" scope="col">{{ col }}</th>
     </tr>
     </thead>
     <tbody>
     <tr v-for="(value, index) in list" v-bind:key="value.name">
       <th scope="row">{{index}}</th>
-      <td v-for="prop in value" v-bind:key="prop">{{ prop }}</td>
+      <td v-for="col in columns" v-bind:key="col">{{ value[col] }}</td>
     </tr>
     </tbody>
   </table>
@@ -19,7 +19,8 @@
 export default {
   name: 'BaseTable',
   props: {
-    list: Array
+    list: Array,
+    columns: Array
   }
 };
 </script>

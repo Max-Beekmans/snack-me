@@ -6,13 +6,11 @@ const repo = function() {
     };
 
     let addItem = function(item) {
-        fbDb.collection("items").add({
-            first: item.first,
-            last: item.last
-        }).then((docRef) => {
-            console.log("Document written with ID: ", docRef.id);
-        }).catch((error) => {
-            console.error("Error adding document: ", error);
+        return fbDb.collection("items").add({
+            name: item.name,
+            weight: item.weight,
+            price: item.price,
+            image: item.image
         });
     };
 

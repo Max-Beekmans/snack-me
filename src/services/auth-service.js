@@ -6,8 +6,13 @@ const authService = function() {
         return fbAuth.signInWithEmailAndPassword(email, password);
     }
 
+    let firebaseUser = function() {
+        return fbAuth.currentUser;
+    }
+
     return {
-        emailSignIn
+        emailSignIn,
+        firebaseUser
     }
 }();
 

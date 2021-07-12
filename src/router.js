@@ -11,9 +11,12 @@ Vue.use(VueRouter);
 
 export default function(store) {
     let guard = function (to, from, next) {
-        if (store.getters.signedUser)
-            next();
-        next({ path: '/' });
+        console.log(store.getters.signedUser);
+
+        if (store.getters.signedUser === null)
+            next({ path: '/' });
+
+        next();
     }
 
     return new VueRouter({

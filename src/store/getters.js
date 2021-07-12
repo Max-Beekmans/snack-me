@@ -1,6 +1,8 @@
 export default {
+    allItems(state) {
+        return state.items;
+    },
     featuredItems(state) {
-        console.log(state.items);
         return state.items;
     },
     signedUser(state) {
